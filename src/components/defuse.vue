@@ -7,7 +7,7 @@
         <img src="../assets/logo2@2x.png" alt="In家生活">
       </div>
       <div class="defuse-footer">
-        <a @click="order">预约看房</a>
+        <a class="brown-btn" @click="order">预约看房</a>
         <h2>如有兴趣，点击预约看房，就能申请实地看风水</h2>
       </div>
     </div>
@@ -43,7 +43,6 @@
         this.isOrder = false;
       }
     }
-
   }
 
 </script>
@@ -51,14 +50,16 @@
   .defuse-main {
     width: 100vw;
     height: 100vh;
+    &::before,
+    &::after {
+      content: "";
+      width: 100%;
+      position: absolute;
+    }
     &::before {
       background: url("../assets/xinB@2x.png");
       background-size: 100% 100%;
-      content: "";
-      width: 100%;
       height: 300px;
-      display: inline-block;
-      position: absolute;
       bottom: 50px;
     }
     .defuse-z {
@@ -69,13 +70,11 @@
       width: 96%;
       height: 85%;
       margin: 0 auto;
-      text-align: center;
       h1 {
         position: absolute;
         width: 16px;
         font-size: 16px;
         color: #444444;
-        text-align: center;
         line-height: 22px;
         &:first-of-type {
           left: 44%;
@@ -97,11 +96,7 @@
     &::after {
       background: url("../assets/xinA@2x.png");
       background-size: 100% 100%;
-      content: "";
-      width: 100%;
       height: 200px;
-      display: inline-block;
-      position: absolute;
       bottom: 0;
       z-index: 3;
     }
@@ -113,20 +108,12 @@
     z-index: 4;
     text-align: center;
     a {
-      display: inline-block;
-      background: #a59371;
-      width: 85px;
-      height: 34px;
-      line-height: 34px;
       font-size: 12px;
-      color: #ffffff;
     }
     h2 {
       font-size: 12px;
-      color: #333333;
       letter-spacing: 1px;
       line-height: 20px;
-      text-align: center;
       margin-top: 20px;
     }
   }

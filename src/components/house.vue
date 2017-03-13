@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="item item-house" v-for="n in 10">
+    <div class="item item-house" v-for="n in 10" :key="'house'+n">
       <input type="radio" :id="'house'+n" :value="n" v-model="house">
       <label :for="'house'+n">{{n}}</label>
     </div>

@@ -1,8 +1,8 @@
 <template>
-  <div class="res">
+  <div class="result-main">
     <h1>融创河滨之城-195A户型</h1>
     <img src="../assets/result@1x.png" alt="结果图" width="300px" height="270px">
-    <tab v-for="n in 10" :value="n" :top="50" :left="0"></tab>
+    <tab v-for="n in 10" :value="n" :top="50" :left="0" :key="'tab'+n"></tab>
     <div :class="[{'tab-none':isDefuse},'tab']">
       <div class="z">
         <div class="grad-res"></div>
@@ -11,14 +11,14 @@
         <div class="grad-res"></div>
       </div>
     </div>
-    <a class="result-btn" @click="defuse">获取化解方法</a>
+    <a class="btn result-btn" @click="defuse">获取化解方法</a>
     <popup :popStyle="resStyle" :show="isDefuse">
       <div slot="popup-main">
         <div class="popup-res">
           <h1>手机验证</h1>
           <input type="text" class="phone" placeholder="手机号">
           <input type="text" class="phone-verify" placeholder="验证码">
-          <a class="verify-btn">获取验证码</a>
+          <a class="brown-btn verify-btn">获取验证码</a>
           <img src="../assets/logo2@2x.png" alt="In家生活" width="50px" height="50px">
         </div>
         <a class="btn" @click="lookUp">查看</a>
@@ -66,7 +66,7 @@
 
 </script>
 <style lang="less">
-  .res {
+  .result-main {
     background: rgb(244, 240, 235);
     width: 100vw;
     height: 100vh;
@@ -75,9 +75,11 @@
     position: relative;
     h1 {
       font-size: 18px;
-      color: #333333;
       line-height: 30px;
       margin-bottom: 10px;
+    }
+    .result-btn {
+      margin-top: 20px;
     }
   }
   
@@ -86,15 +88,17 @@
     height: 180px;
     margin-top: 20px;
     position: relative;
-    background: #FFFFFF;
-    &::before {
+    &::before,
+    &::after {
+      content: "";
       position: absolute;
+      left: 0;
+    }
+    &::before {
       width: 34px;
       height: 208px;
       background: url("../assets/xin1@2x.png");
       background-size: cover;
-      content: "";
-      left: 0;
       bottom: -14px;
       z-index: 3;
     }
@@ -108,13 +112,10 @@
       box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.20);
     }
     &::after {
-      position: absolute;
       width: 118px;
       height: 200px;
       background: url("../assets/xin2@2x.png");
       background-size: cover;
-      content: "";
-      left: 0;
       bottom: -9px;
       z-index: 1;
     }
@@ -141,18 +142,6 @@
     }
   }
   
-  .result-btn {
-    display: inline-block;
-    background: #000000;
-    width: 140px;
-    height: 40px;
-    font-size: 14px;
-    line-height: 40px;
-    color: #ffffff;
-    letter-spacing: 2px;
-    margin-top: 20px;
-  }
-  
   .popup-res {
     width: 285px;
     height: 280px;
@@ -165,12 +154,8 @@
       left: 0;
     }
     input {
-      background: #ffffff;
-      border: 1px solid #eae4e4;
       width: 243px;
       height: 34px;
-      color: #aaaaaa;
-      padding-left: 10px;
     }
     .phone {
       margin: 50px 0 20px;
@@ -180,12 +165,6 @@
       float: left;
     }
     .verify-btn {
-      display: inline-block;
-      background: #a59371;
-      width: 85px;
-      height: 34px;
-      line-height: 34px;
-      color: #ffffff;
       float: right;
     }
     img {

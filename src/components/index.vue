@@ -10,7 +10,7 @@
               <building v-model="buildInfo" v-if="!isAdd">
                 <div class="add-building" slot="add-building">
                   <input type="text" placeholder="没找到？请输入您的楼盘" class="information" v-model="buildMess">
-                  <a class="add" @click="add">添加</a>
+                  <a class="brown-btn add" @click="add">添加</a>
                 </div>
               </building>
               <twobar v-if="isAdd" :isDefuse="false"></twobar>
@@ -106,21 +106,7 @@
       top: 18px;
       width: 100%;
       font-size: 18px;
-      color: #333333;
       line-height: 18px;
-      text-align: center;
-    }
-    .btn {
-      display: inline-block;
-      margin-top: 10px;
-      background: #000000;
-      width: 140px;
-      height: 40px;
-      font-size: 14px;
-      color: #ffffff;
-      letter-spacing: 2px;
-      text-align: center;
-      line-height: 40px;
     }
   }
   
@@ -147,30 +133,23 @@
       position: relative;
       z-index: 11;
       font-size: 12px;
-      &:after {
+      &::after {
+        content: "";
         display: block;
         clear: both;
-        content: "";
         visibility: hidden;
         height: 0
       }
       .information {
         float: left;
-        background: #ffffff;
-        border: 1px solid #eae4e4;
         width: 168px;
         height: 30px;
-        line-height: 30px;
-        padding-left: 10px;
-        color: #aaaaaa;
       }
       .add {
-        background: #a59371;
         width: 63px;
         height: 30px;
         line-height: 30px;
         float: right;
-        color: #ffffff;
       }
     }
   }

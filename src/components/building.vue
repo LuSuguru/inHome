@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="item" v-for="n in 10">
+    <div class="item" v-for="n in 10" :key="'build'+n">
       <input type="radio" :id="'building'+n" :value="n" v-model="building">
       <label :for="'building'+n">{{n}}</label>
     </div>
@@ -36,19 +36,18 @@
     input[type="radio"]+label {
       display: block;
       margin: 0 auto;
-      font-size: 14px;
       color: #333333;
       letter-spacing: 2px;
       position: relative;
       width: 70px;
       height: 47px;
       &::before {
+        content: "";
         position: absolute;
         width: 12px;
         height: 12px;
         left: -20px;
         top: 1px;
-        content: "";
         display: inline-block;
         background: rgba(215, 215, 215, 0.00);
         border: 1px solid #888888;
@@ -57,6 +56,7 @@
     }
     input[type="radio"]:checked+label {
       &::before {
+        content: "";
         background: url("../assets/xuanze@2x.png");
         background-size: 14px 12px;
         border: 0;
@@ -65,7 +65,5 @@
       }
     }
   }
-  
- 
 
 </style>
