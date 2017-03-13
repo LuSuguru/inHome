@@ -54,12 +54,13 @@
     },
     methods: {
       change() {
-        if (this.title == "building") {
+        if (this.title == "building" && this.buildInfo) {
           this.heading = "户 型";
           this.btn = "查看结果";
           this.title = "house";
           this.isHouse = true;
-        } else if (this.title == "house") {
+        } else if (this.title == "house" && this.houseInfo) {
+
           router.push({
             name: 'result',
             params: {
@@ -67,14 +68,16 @@
               house: this.houseInfo
             }
           });
-        } else {
+        } else if (this.title == "ok") {
           this.isShow = false;
         }
       },
       add() {
-        this.isAdd = !this.isAdd;
-        this.btn = "OK";
-        this.title = "ok";
+        if (this.buildMess) {
+          this.isAdd = !this.isAdd;
+          this.btn = "OK";
+          this.title = "ok";
+        }
       }
     }
   }
