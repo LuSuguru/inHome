@@ -1,7 +1,8 @@
 <template>
   <div class="two-bar">
     <img src="../assets/erweima@2x.png" alt="扫描二维码" width="205px" height="205px">
-    <h2>提交成功</h2>
+    <h2 v-if="isDefuse">预约成功</h2>
+    <h2 v-if="!isDefuse">提交成功</h2>
     <h3 v-if="!isDefuse">扫描二维码，关注公众号 <br>并留意消息推送喔</h3>
     <h3 v-if="isDefuse">您的预约已提交，请留意手机我们会及时联系您喔 </h3>
   </div>
@@ -27,6 +28,8 @@
       color: #a59371;
       line-height: 30px;
       margin-bottom: 10px;
+      font-family: "微软雅黑";
+      font-weight: bold;
     }
     h3 {
       letter-spacing: 2px;

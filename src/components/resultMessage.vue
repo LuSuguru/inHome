@@ -28,11 +28,11 @@
           return false;
         }
       },
-			isFirst() {
-				if(this.title=="good") {
-					return 20;
-				}
-			}
+      isFirst() {
+        if (this.title == "good") {
+          return 20;
+        }
+      }
     }
   }
 
@@ -52,7 +52,8 @@
       width: 120px;
       height: 144px;
       padding: 0 10px;
-      overflow: scroll;
+      overflow: auto;
+      -webkit-overflow-scrolling: touch;
     }
     p {
       font-size: 12px;
@@ -60,8 +61,18 @@
       line-height: 18px;
       text-align: left;
       margin-bottom: 16px;
+      position: relative;
       &:first-of-type {
         margin-top: 9px;
+      }
+      &::before {
+        position: absolute;
+        content: "";
+        background: url("../assets/biaoqin.png");
+        width: 2px;
+        height: 10px;
+        top: 3px;
+        left: -5px;
       }
     }
   }

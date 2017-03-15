@@ -4,8 +4,11 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import './reset.css'
+import VueTouch from 'vue-touch'
 
-Vue.config.productionTip = false
+Vue.use(VueTouch,{name:'v-touch'})
+Vue.config.productionTip = false;
+
 
 /* eslint-disable no-new */
 new Vue({
@@ -14,4 +17,5 @@ new Vue({
     template: '<App/>',
     components: { App }
 })
-window.router = router
+window.router = router;
+window.isFirst = true;

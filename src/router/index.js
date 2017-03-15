@@ -16,7 +16,7 @@ export default new Router({
         name: 'result',
         component: result
     },{
-        path:'/defuse/:building/:house',
+        path:'/result/defuse/:building/:house',
         name:'defuse',
         component:defuse
     }]

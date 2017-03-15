@@ -3,7 +3,7 @@
     <div :class="[{'popup-show':isShow},'popup']" :style="popStyle">
       <slot name="popup-main"></slot>
     </div>
-    <div :class="{'popup-bg':isBg}"></div>
+    <div :class="[{'popupBg-show':isBg},'popupBg']"></div>
   </div>
 </template>
 <script>
@@ -14,7 +14,7 @@
         isBg: false
       }
     },
-    props: ["show","popStyle"],
+    props: ["show", "popStyle"],
     watch: {
       show(val) {
         if (!val) {
@@ -27,20 +27,30 @@
       }
     },
     mounted() {
-      if(this.show)
-      setTimeout(() => {
-        this.isShow = true;
-        this.isBg = true;
-      }, 500);
+      if (this.show)
+        setTimeout(() => {
+          this.isShow = true;
+          this.isBg = true;
+        }, 2000);
     }
   }
 
 </script>
 <style lang="less">
-  .popup-bg {
+  .popupBg {
+    position: absolute;
+    transition: all 1s;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0);
+    visibility: hidden;
+  }
+  
+  .popupBg-show {
     position: absolute;
     top: 0;
-    transition: all 1s;
+    visibility: visible;
     background: rgba(0, 0, 0, 0.59);
     width: 100vw;
     height: 100vh;
@@ -49,7 +59,7 @@
   
   .popup {
     transition: all 1s;
-    transform: translateY(120px);
+    transform: translateY(9vh);
     visibility: hidden;
     opacity: 0;
     position: absolute;
@@ -57,20 +67,19 @@
     width: 315px;
     height: 460px;
     left: 50%;
-    top: 0;
-    background: url("../assets/huajuan1@2x.png");
+    top: 50%;
+    background: url("../assets/huajuan1@2x.jpg");
     background-size: 315px 460px;
     padding-top: 50px;
     text-align: center;
     margin-left: -157.5px;
-    margin-top: 50px;
+    margin-top: -230px;
   }
   
   .popup-show {
-    transition: all 1s;
     transform: translateY(0);
     visibility: visible;
     opacity: 1;
   }
-  
+
 </style>

@@ -3,25 +3,31 @@
     <popup :show="isShow">
       <div slot="popup-main">
         <h1>{{heading}}</h1>
+        <a class="return" v-if="isHouse" @click="reBuild"><img src="../assets/zuo@2x.png" alt="返回上一层" width="11px" height="18px"></a>
         <div class="popup-main">
           <div class="gradient"></div>
-          <div class="popup-message">
-            <template v-if="!isHouse">
-              <building v-model="buildInfo" v-if="!isAdd">
-                <div class="add-building" slot="add-building">
-                  <input type="text" placeholder="没找到？请输入您的楼盘" class="information" v-model="buildMess">
-                  <a class="brown-btn add" @click="add">添加</a>
-                </div>
-              </building>
-              <twobar v-if="isAdd" :isDefuse="false"></twobar>
-            </template>
-            <house v-model="houseInfo" v-if="isHouse"></house>
+          <div class="popup-message" @scroll="move">
+            <transition name="fade" mode="out-in">
+              <template v-if="!isHouse">
+                <building v-model="buildInfo" v-if="!isAdd">
+                  <div class="add-building" slot="add-building">
+                    <input type="text" placeholder="没找到？请输入您的楼盘" class="information" v-model="buildMess">
+                    <a class="brown-btn add-btn" @click="add" :style="addBg">添加</a>
+                  </div>
+                </building>
+                <twobar v-if="isAdd" :isDefuse="false"></twobar>
+              </template>
+              <house v-model="houseInfo" v-if="isHouse"></house>
+            </transition>
           </div>
-          <div class="gradient"></div>
+          <transition name="bottom">
+            <div class="gradient" v-if="!isBottom"></div>
+          </transition>
         </div>
-        <a @click="change" class="btn">{{btn}}</a>
+        <a @click="change" class="btn change-btn" :style="changeBg">{{btn}}</a>
       </div>
     </popup>
+
   </div>
 </template>
 
@@ -43,7 +49,8 @@
         buildMess: "",
         isAdd: false,
         isHouse: false,
-        isShow: true
+        isShow: true,
+        isBottom: false
       }
     },
     components: {
@@ -51,6 +58,22 @@
       building,
       twobar,
       house
+    },
+    computed: {
+      addBg() {
+        if (!this.buildMess) {
+          return {
+            background: "#aaa"
+          }
+        }
+      },
+      changeBg() {
+        if ((this.buildInfo && this.title == "building") || this.houseInfo) {
+          return {
+            background: "#000"
+          }
+        }
+      }
     },
     methods: {
       change() {
@@ -60,23 +83,35 @@
           this.title = "house";
           this.isHouse = true;
         } else if (this.title == "house" && this.houseInfo) {
-
           router.push({
             name: 'result',
             params: {
               building: this.buildInfo,
-              house: this.houseInfo
+              house: this.houseInfo,
             }
           });
         } else if (this.title == "ok") {
           this.isShow = false;
         }
       },
+      reBuild() {
+        this.isHouse = false;
+        this.heading = "楼  盘";
+        this.btn = "下一步";
+        this.title = "building";
+      },
       add() {
         if (this.buildMess) {
           this.isAdd = !this.isAdd;
           this.btn = "OK";
           this.title = "ok";
+        }
+      },
+      move(event) {
+        if (event.target.scrollTop > 148 && this.title == "building") {
+          this.isBottom = true;
+        } else {
+          this.isBottom = false;
         }
       }
     }
@@ -85,11 +120,37 @@
 </script>
 
 <style lang="less">
+  .fade-enter-active,
+  .fade-leave-active {
+    transition: all .5s;
+  }
+  
+  .fade-enter,
+  .fade-leave-to {
+    opacity: 0;
+    transform: translateY(10vh);
+  }
+  
+  .bottom-enter-active,
+  .bottom-leave-active {
+    transition: all .3s;
+    visibility: visible;
+  }
+  
+  .bottom-enter,
+  .bottom-leave-to {
+    opacity: 0;
+    visibility: hidden;
+  }
+  
   .main {
-    background: url("../assets/shouye@2x.png");
+    background: url("../assets/shouye@2x.jpg");
     background-size: 100% 100%;
     width: 100vw;
     height: 100vh;
+    .change-btn {
+      background: #aaa;
+    }
   }
   
   .popup-main {
@@ -107,6 +168,12 @@
       width: 100%;
       font-size: 18px;
       line-height: 18px;
+    }
+    .return {
+      position: absolute;
+      width: 15px;
+      top: 18px;
+      left: 16px;
     }
   }
   
@@ -127,11 +194,11 @@
     width: 100%;
     height: 100%;
     padding-top: 8px;
-    overflow-y: scroll;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
     .add-building {
       margin: 0 20px 20px;
       position: relative;
-      z-index: 11;
       font-size: 12px;
       &::after {
         content: "";
@@ -145,7 +212,7 @@
         width: 168px;
         height: 30px;
       }
-      .add {
+      .add-btn {
         width: 63px;
         height: 30px;
         line-height: 30px;

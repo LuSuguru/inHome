@@ -1,10 +1,14 @@
 <template>
-  <div>
+  <div :class="['defuse',{open:isOpen}]">
     <div class="defuse-main">
-      <div class="defuse-z">
-        <h1>次 卧 挨 电 梯 ， 黄 色 水 晶 球 可 化 解</h1>
-        <h1>炉 灶 对 客 厅 ， 吃 饭 时 关 门 巧 化 解</h1>
-        <img src="../assets/logo2@2x.png" alt="In家生活">
+      <div :class="['defuse-z',{'open-z':isOpen}]">
+        <v-touch v-on:swipedown="reResult">
+          <a class="re-btn" @click="reResult"><img src="../assets/xia@2x.png" alt="返回结果" width="19px" height="11px"></a>
+          <img src="../assets/huajiefangshi@2x.png" alt="化解方式" class="huajie">
+          <h2>次 卧 挨 电 梯 ， 黄 色 水 晶 球 可 化 解</h2>
+          <h2>炉 灶 对 客 厅 ， 吃 饭 时 关 门 巧 化 解</h2>
+          <img src="../assets/logo2@2x.png" alt="In家生活" class="logo">
+        </v-touch>
       </div>
       <div class="defuse-footer">
         <a class="brown-btn" @click="order">预约看房</a>
@@ -25,10 +29,12 @@
 <script>
   import popup from "../components/popup"
   import twobar from "../components/twobar"
+
   export default {
     data() {
       return {
-        isOrder: false
+        isOrder: false,
+        isOpen: false
       }
     },
     components: {
@@ -41,28 +47,66 @@
       },
       isOk() {
         this.isOrder = false;
-      }
+      },
+      reResult() {
+        router.push({
+          name: 'result',
+          params: {
+            building: this.$route.params.building,
+            house: this.$route.params.house
+          }
+        })
+      },
+    },
+    mounted() {
+      setTimeout(() => {
+        this.isOpen = true;
+      }, 300);
     }
   }
 
 </script>
 <style lang="less">
-  .defuse-main {
-    width: 100vw;
-    height: 100vh;
+  .defuse {
     &::before,
     &::after {
       content: "";
-      width: 100%;
+      width: 100vw;
       position: absolute;
+      transition: all 0.5s;
+      opacity: 0;
+      transform: translate(0, 30px);
     }
     &::before {
       background: url("../assets/xinB@2x.png");
       background-size: 100% 100%;
-      height: 300px;
-      bottom: 50px;
+      height: 80vw;
+      bottom: 8vh;
     }
+    &::after {
+      background: url("../assets/xinA@2x.png");
+      background-size: 100% 100%;
+      height: 32vh;
+      bottom: 0;
+      z-index: 3;
+    }
+  }
+  
+  .open {
+    &::before,
+    &::after {
+      opacity: 1;
+      transform: translate(0, 0);
+    }
+  }
+  
+  .defuse-main {
+    width: 100vw;
+    height: 100vh;
     .defuse-z {
+      opacity: 0;
+      transform: translate(0,-20px);
+      transition: all 1s;
       background: url("../assets/xinzhi@2x.png");
       background-size: 100% 100%;
       position: relative;
@@ -70,22 +114,38 @@
       width: 96%;
       height: 85%;
       margin: 0 auto;
-      h1 {
+      .re-btn {
         position: absolute;
-        width: 16px;
+        left: 50%;
+        top: 20px;
+        margin-left: -11px;
+      }
+      .huajie {
+        width: 20px;
+        height: 120px;
+        position: absolute;
+        left: 14%;
+        top: 15%;
+      }
+      h2 {
+        position: absolute;
+        width: 25px;
+        height: 65%;
+        overflow: auto;
+        -webkit-overflow-scrolling: touch;
         font-size: 16px;
         color: #444444;
         line-height: 22px;
         &:first-of-type {
-          left: 44%;
-          top: 15%;
+          left: 44%; //一行9%
+          top: 20%;
         }
         &:last-of-type {
           left: 53%;
-          top: 15%;
+          top: 20%;
         }
       }
-      img {
+      .logo {
         position: absolute;
         height: 6%;
         width: 8%;
@@ -93,12 +153,9 @@
         top: 72%;
       }
     }
-    &::after {
-      background: url("../assets/xinA@2x.png");
-      background-size: 100% 100%;
-      height: 200px;
-      bottom: 0;
-      z-index: 3;
+    .open-z {
+      transform: translate(0,0);
+      opacity: 1;
     }
   }
   
