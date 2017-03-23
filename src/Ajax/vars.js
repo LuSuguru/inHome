@@ -30,10 +30,12 @@ export const sendMessage = (url) => {
                 nonceStr: e.data.weJsapiSignature.nonceStr,
                 signature: e.data.weJsapiSignature.signature
             });
-            fenxiang({
-                title: e.data.activityDesc.shareTitle,
-                desc: e.data.activityDesc.shareContent,
-                imgUrl: e.data.activityDesc.shareImg,
+            wx.ready( () => {
+                fenxiang({
+                    title: e.data.activityDesc.shareTitle,
+                    desc: e.data.activityDesc.shareContent,
+                    imgUrl: e.data.activityDesc.shareImg,
+                })
             })
         }
     })
