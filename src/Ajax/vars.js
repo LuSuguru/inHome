@@ -66,7 +66,7 @@ export const wxConfig = ({
 export const fenxiang = (
     title,
     desc,
-    link = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxd83f1f75c115031c&redirect_uri=http://inhouse.moovi-tech.com/login.html&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect",
+    link = "http://inhouse.moovi-tech.com/",
     imgUrl,
 ) => {
     wx.onMenuShareTimeline({
