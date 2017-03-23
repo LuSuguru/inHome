@@ -132,7 +132,8 @@
       }
     },
     created() {
-      sendMessage(window.location.href);
+      // sendMessage(window.location.href);
+      sendMessage(window.location.href.split('#')[0])
     }
   }
 
@@ -143,25 +144,25 @@
   .fade-leave-active {
     transition: all .5s;
   }
-  
+
   .fade-enter,
   .fade-leave-to {
     opacity: 0;
     transform: translateY(10vh);
   }
-  
+
   .bottom-enter-active,
   .bottom-leave-active {
     transition: all .3s;
     visibility: visible;
   }
-  
+
   .bottom-enter,
   .bottom-leave-to {
     opacity: 0;
     visibility: hidden;
   }
-  
+
   .main {
     background: url("../assets/shouye@2x.jpg");
     background-size: 100% 100%;
@@ -171,14 +172,14 @@
       background: #aaa;
     }
   }
-  
+
   .popup-main {
     position: relative;
     width: 285px;
     height: 350px;
     margin: 0 auto;
   }
-  
+
   .popup {
     h1 {
       position: absolute;
@@ -195,7 +196,7 @@
       left: 16px;
     }
   }
-  
+
   .gradient {
     background-image: linear-gradient(to bottom, #ffffff 24%, rgba(255, 255, 255, 0.00) 98%);
     z-index: 10;
@@ -208,7 +209,7 @@
       bottom: 0;
     }
   }
-  
+
   .popup-message {
     width: 100%;
     height: 100%;
