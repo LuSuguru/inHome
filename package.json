@@ -14,7 +14,7 @@
     "superagent": "^3.5.1",
     "vue": "^2.2.1",
     "vue-router": "^2.2.0",
-    "vue-touch": "^1.1.0"
+    "vue-touch": "^2.0.0-beta.4"
   },
   "devDependencies": {
     "autoprefixer": "^6.7.2",
