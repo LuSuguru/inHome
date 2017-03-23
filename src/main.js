@@ -5,6 +5,7 @@ import App from './App'
 import router from './router'
 import './reset.css'
 import VueTouch from 'vue-touch'
+import dumbWrapper from './Ajax/vars'
 
 Vue.use(VueTouch,{name:'v-touch'})
 Vue.config.productionTip = false;
@@ -19,3 +20,4 @@ new Vue({
 })
 window.router = router;
 window.isFirst = true;
+

@@ -17,7 +17,7 @@
                 </building>
                 <twobar v-if="isAdd" :isDefuse="false"></twobar>
               </template>
-              <house v-model="houseInfo" v-if="isHouse"></house>
+              <house v-model="houseInfo" v-if="isHouse" :types="buildInfo"></house>
             </transition>
           </div>
           <transition name="bottom">
@@ -36,7 +36,14 @@
   import building from "../components/building"
   import twobar from "../components/twobar"
   import house from "../components/house"
+  import {
+    newEstate
+  } from "../Ajax/post.js"
 
+  import {
+    dumbWrapper,
+    sendMessage
+  } from "../Ajax/vars.js"
 
   export default {
     data() {
@@ -86,7 +93,6 @@
           router.push({
             name: 'result',
             params: {
-              building: this.buildInfo,
               house: this.houseInfo,
             }
           });
@@ -102,11 +108,21 @@
       },
       add() {
         if (this.buildMess) {
-          this.isAdd = !this.isAdd;
+          let params = {
+            name: this.buildMess
+          };
+          dumbWrapper({
+            promise: newEstate(params),
+            successCB: () => {
+              this.isAdd = true;
+            }
+          })
           this.btn = "OK";
           this.title = "ok";
         }
       },
+
+
       move(event) {
         if (event.target.scrollTop > 148 && this.title == "building") {
           this.isBottom = true;
@@ -114,6 +130,9 @@
           this.isBottom = false;
         }
       }
+    },
+    created() {
+      sendMessage(window.location.href);
     }
   }
 

@@ -1,14 +1,16 @@
 <template>
   <div class="result-main">
     <h1>融创河滨之城-195A户型</h1>
-    <img src="../assets/result@1x.png" alt="结果图" class="img-result">
-    <tab v-for="n in 10" :value="n" :top="50" :left="0" :key="'tab'+n"></tab>
+    <div class="dingwei">
+      <img src="../assets/result@1x.png" alt="结果图" class="img-result">
+      <tab v-for="pointer in pointers" :value="pointer.content" :top="(pointer.y)/500*250" :left="(pointer.x)/500*300" :key="pointer.id"></tab>
+    </div>
     <div :class="[{'tab-none':isDefuse},'tab']">
       <img src="../assets/xin4@2x.png" alt="" :class="['xinBottom',{afterChange1:isOpen}]">
       <div class="z">
         <div class="grad-res"></div>
-        <resultMessage title="good"></resultMessage>
-        <resultMessage title="bad"></resultMessage>
+        <resultMessage title="good" :arr="goods"></resultMessage>
+        <resultMessage title="bad" :arr="bads"></resultMessage>
         <div class="grad-res"></div>
       </div>
       <img src="../assets/xin3@2x.png" alt="" :class="['xinTop',{afterChange2:isOpen}]">
@@ -19,7 +21,7 @@
         <div class="popup-res">
           <h1>手机验证</h1>
           <a class="close" @click="close"><img src="../assets/guanbi@2x.png" alt="关闭" width="18px" height="18px"></a>
-          <input type="number" class="phone" placeholder="手机号">
+          <input type="number" class="phone" placeholder="手机号" v-model="phone">
           <input type="number" class="phone-verify" placeholder="验证码" v-model="verify">
           <a class="brown-btn verify-btn" @click="ver">
             <span v-if="!isClick">获取验证码</span>
@@ -36,6 +38,19 @@
   import resultMessage from "../components/resultMessage"
   import tab from "../components/tab"
   import popup from "../components/popup"
+  import {
+    advice
+  } from "../Ajax/get.js"
+  import {
+    sendCode
+  } from "../Ajax/get.js"
+  import {
+    defuse
+  } from "../Ajax/get.js"
+  import {
+    dumbWrapper,
+    sendMessage
+  } from "../Ajax/vars.js"
   export default {
     data() {
       return {
@@ -49,7 +64,14 @@
           "background-size": "100% 100%",
           "margin-top": "-205px",
           "padding-top": "60px"
-        }
+        },
+
+        goods: [],
+        bads: [],
+        pointers: [],
+
+        phone: "",
+        verify: ""
       }
     },
     components: {
@@ -78,31 +100,82 @@
 
       },
       lookUp() {
-        router.push({
-          name: 'defuse',
-          params: {
-            building: this.$route.params.building,
-            house: this.$route.params.house
-          }
-        })
+        if (window.isFirst) {
+          let params = {
+            scode: this.verify,
+            phone: this.phone,
+            huxingId: this.$route.params.house
+          };
+          dumbWrapper({
+            promise: defuse(params),
+            successCB: (e) => {
+              window.isFirst = false;
+              router.push({
+                name: 'defuse',
+                params: {
+                  house: this.$route.params.house
+                }
+              })
+            }
+          });
+        } else {
+          router.push({
+            name: 'defuse',
+            params: {
+              house: this.$route.params.house
+            }
+          })
+        }
       },
       ver() {
-        window.isFirst = false;
         if (!this.isClick) {
-          this.number = 60;
-          this.isClick = !this.isClick;
-          this.number--;
+          let params = {
+            phone: this.phone
+          }
+          dumbWrapper({
+            promise: sendCode(params),
+            successCB: () => {
+              this.number = 60;
+              this.isClick = !this.isClick;
+              this.number--;
+            }
+          })
         }
       },
       close() {
         this.isDefuse = false;
       }
     },
+    created() {
+      sendMessage(window.location.href);
+    },
     mounted() {
       setTimeout(() => {
         this.isOpen = true;
       }, 1000);
-
+      let params = {
+        huxingId: this.$route.params.house
+      }
+      dumbWrapper({
+        promise: advice(params),
+        successCB: (e) => {
+          e.data.forEach((item) => {
+            switch (item.type) {
+              case 0:
+                this.goods.push(item);
+                break;
+              case 1:
+                this.bads.push(item);
+                break;
+              case 4:
+                break;
+              default:
+                this.pointers.push(item);
+                break;
+            }
+          });
+        }
+      })
     }
   }
 
@@ -112,20 +185,22 @@
     background: rgb(244, 240, 235);
     width: 100vw;
     height: 100vh;
-    padding-top: 20px;
+    padding-top: 3vh;
     text-align: center;
     position: relative;
     .img-result {
-      width: 80vw;
-      height: 42vh;
+      width: 300px;
+      height: 250px;
     }
     h1 {
       font-size: 18px;
       line-height: 30px;
-      margin-bottom: 10px;
+      margin-bottom: 2vh;
     }
     .result-btn {
-      margin-top: 20px;
+      margin-top: 3vw;
+      width: 38vw;
+      height: 7vh;
     }
   }
   
@@ -223,6 +298,11 @@
     .logo {
       margin-top: 70px;
     }
+  }
+  
+  .dingwei {
+    position: relative;
+    display: inline-block;
   }
 
 </style>

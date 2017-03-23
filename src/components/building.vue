@@ -1,26 +1,41 @@
 <template>
   <div>
-    <div class="item" v-for="n in 10" :key="'build'+n">
-      <input type="radio" :id="'building'+n" :value="n" v-model="building">
-      <label :for="'building'+n">九龙仓君玺</label>
+    <div class="item" v-for="building in buildings" :key="building.loupanId">
+      <input type="radio" :id="building.loupanId" :value="building.huxings" v-model="build">
+      <label :for="building.loupanId">{{building.name}}</label>
     </div>
     <slot name="add-building"></slot>
   </div>
 </template>
 
 <script>
+  import {
+    allEstate
+  } from "../Ajax/get.js"
+  import {
+    dumbWrapper
+  } from "../Ajax/vars.js"
   export default {
     data() {
       return {
-        building: ""
+        buildings: [],
+        build: ""
       }
     },
     props: ["value"],
     watch: {
-      building(val) {
+      build(val) {
         this.$emit("input", val);
       }
     },
+    mounted() {
+      dumbWrapper({
+        promise: allEstate(),
+        successCB: (e) => {
+          this.buildings = e.data;
+        }
+      })
+    }
   }
 
 </script>

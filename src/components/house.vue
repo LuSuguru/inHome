@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div class="item item-house" v-for="n in 10" :key="'house'+n">
-      <input type="radio" :id="'house'+n" :value="n" v-model="house">
-      <label :for="'house'+n">166户型</label>
+    <div class="item item-house" v-for="item in types" :key="item.id">
+      <input type="radio" :id="item.id" :value="item.id" v-model="house">
+      <label :for="item.id">{{item.name}}</label>
     </div>
     <img src="../assets/xinzhi@2x.png" alt="" v-show="false">
     <img src="../assets/xin3@2x.png" alt="" v-show="false">
@@ -17,11 +17,14 @@
         house: ""
       }
     },
-    props: ["value"],
+    props: ["value", "types"],
     watch: {
       house(val) {
         this.$emit("input", val);
       }
+    },
+    mounted() {
+      
     }
   }
 

@@ -3,23 +3,16 @@
     <img src="../assets/jia@2x.png" alt="佳" v-if="isGood">
     <img src="../assets/bi@2x.png" alt="弊" v-if="!isGood">
     <div class="info">
-      <p>玄关旺财，客厅聚财，利于谈事业，谈合作</p>
-      <p>主卧卫生设计较佳，其门、床。房门皆不想对，通透、易排浊气</p>
-      <p>厨房炉灶对客厅，长期事业易走下坡路</p>
-      <p>厨房炉灶对客厅，长期事业易走下坡路</p>
-      <p>厨房炉灶对客厅，长期事业易走下坡路</p>
-      <p>厨房炉灶对客厅，长期事业易走下坡路</p>
+      <p v-for="item in arr">{{item.content}}</p>
     </div>
   </div>
 </template>
 <script>
   export default {
     data() {
-      return {
-
-      }
+      return {}
     },
-    props: ["title"],
+    props: ["title", "arr"],
     computed: {
       isGood() {
         if (this.title == "good") {
@@ -59,7 +52,7 @@
       font-size: 12px;
       color: #666666;
       line-height: 18px;
-      text-align: left;
+      text-align: center;
       margin-bottom: 16px;
       position: relative;
       &:first-of-type {

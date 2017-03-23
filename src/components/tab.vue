@@ -1,20 +1,30 @@
 <template>
-  <div class="mark" :style="{top:top+'px',left:left+'px'}">
+  <div :class="['mark-bg',{make:isOpen}]" :style="{top:top+'px',left:left+'px'}">
     <span>{{value}}</span>
   </div>
 </template>
 <script>
   export default {
     data() {
-      return {}
+      return {
+        isOpen: false
+      }
     },
     props: ["value", "top", "left"],
+    mounted() {
+      setTimeout(() => {
+        this.isOpen = true;
+      }, 1000);
+    }
   }
 
 </script>
 <style lang="less">
-  .mark {
+  .mark-bg {
     position: absolute;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 3s;
     width: 64px;
     height: 37px;
     padding-top: 3px;
@@ -25,6 +35,11 @@
       color: #000000;
       line-height: 10px;
     }
+  }
+
+  .make {
+    opacity: 1;
+    visibility: visible;
   }
 
 </style>

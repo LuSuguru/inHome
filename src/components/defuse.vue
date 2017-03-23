@@ -5,8 +5,8 @@
         <v-touch v-on:swipedown="reResult">
           <a class="re-btn" @click="reResult"><img src="../assets/xia@2x.png" alt="返回结果" width="19px" height="11px"></a>
           <img src="../assets/huajiefangshi@2x.png" alt="化解方式" class="huajie">
-          <h2>次 卧 挨 电 梯 ， 黄 色 水 晶 球 可 化 解</h2>
-          <h2>炉 灶 对 客 厅 ， 吃 饭 时 关 门 巧 化 解</h2>
+          <h2 v-for="item in advices">{{item.content}}</h2>
+
           <img src="../assets/logo2@2x.png" alt="In家生活" class="logo">
         </v-touch>
       </div>
@@ -29,12 +29,24 @@
 <script>
   import popup from "../components/popup"
   import twobar from "../components/twobar"
-
+  import {
+    advice
+  } from "../Ajax/get.js"
+  import {
+    yuyue
+  } from "../Ajax/get.js"
+  import {
+    dumbWrapper,
+    sendMessage
+  } from "../Ajax/vars.js"
   export default {
     data() {
       return {
         isOrder: false,
-        isOpen: false
+        isOpen: false,
+
+        advices: [],
+        huxingId: 0
       }
     },
     components: {
@@ -47,6 +59,15 @@
       },
       isOk() {
         this.isOrder = false;
+        let params = {
+          huxingId: this.$route.params.house
+        };
+        dumbWrapper({
+          promise: yuyue(params),
+          successCB: () => {
+            alert("预约成功");
+          }
+        })
       },
       reResult() {
         router.push({
@@ -59,6 +80,20 @@
       },
     },
     mounted() {
+      let params = {
+        huxingId: this.$route.params.house
+      }
+      dumbWrapper({
+        promise: advice(params),
+        successCB: (e) => {
+          e.data.forEach((item) => {
+            if (item.type == 4) {
+              this.advices.push(item);
+              sendMessage(window.location.href);
+            }
+          });
+        }
+      })
       setTimeout(() => {
         this.isOpen = true;
       }, 300);
@@ -105,7 +140,7 @@
     height: 100vh;
     .defuse-z {
       opacity: 0;
-      transform: translate(0,-20px);
+      transform: translate(0, -20px);
       transition: all 1s;
       background: url("../assets/xinzhi@2x.png");
       background-size: 100% 100%;
@@ -154,7 +189,7 @@
       }
     }
     .open-z {
-      transform: translate(0,0);
+      transform: translate(0, 0);
       opacity: 1;
     }
   }
