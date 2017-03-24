@@ -1,18 +1,45 @@
 <template>
   <div class="two-bar">
-    <img src="../assets/erweima@2x.png" alt="扫描二维码" width="205px" height="205px">
+    <img :src="yuyueImg" alt="扫描二维码" width="205px" height="205px" v-if="isDefuse">
+    <img :src="tijiaoImg" alt="扫描二维码" width="205px" height="205px" v-if="!isDefuse">
     <h2 v-if="isDefuse">预约成功</h2>
     <h2 v-if="!isDefuse">提交成功</h2>
-    <h3 v-if="!isDefuse">扫描二维码，关注公众号 <br>并留意消息推送喔</h3>
-    <h3 v-if="isDefuse">您的预约已提交，请留意手机我们会及时联系您喔 </h3>
+    <h3 v-if="!isDefuse">{{tijiaoTitle}}</h3>
+    <h3 v-if="isDefuse">{{yuyueTitle}} </h3>
   </div>
 </template>
 <script>
+  import {
+    baseInfo
+  } from "../Ajax/get.js";
+  import {
+    dumbWrapper
+  } from "../Ajax/vars.js"
   export default {
     data() {
-      return {}
+      return {
+        tijiaoImg: "",
+        tijiaoTitle: "",
+        yuyueImg: "",
+        yuyueTitle: ""
+      }
     },
-    props: ["isDefuse"]
+    props: ["isDefuse"],
+    mounted() {
+      let params = {
+        url: window.location.href
+      };
+      dumbWrapper({
+        promise: baseInfo(params),
+        successCB: (e) => {
+          this.tijiaoImg = e.data.activityDesc.tijiaoImg,
+            this.tijiaoTitle = e.data.activityDesc.tijiaoTitle,
+            this.yuyueImg = e.data.activityDesc.yuyueImg,
+            this.yuyueTitle = e.data.activityDesc.yuyueTitle
+        }
+      })
+    }
+
   }
 
 </script>

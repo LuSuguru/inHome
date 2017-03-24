@@ -24,5 +24,4 @@ export const dealCode = (data, successCB) => {
                 break;
         }
     }
-
 }
