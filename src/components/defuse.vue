@@ -1,20 +1,23 @@
 <template>
   <div :class="['defuse',{open:isOpen}]">
-    <div class="defuse-main">
-      <div :class="['defuse-z',{'open-z':isOpen}]">
-        <v-touch v-on:swipedown="reResult">
+    <v-touch v-on:pandown="reResult">
+      <div class="defuse-main">
+        <div :class="['defuse-z',{'open-z':isOpen}]">
           <a class="re-btn" @click="reResult"><img src="../assets/xia@2x.png" alt="返回结果" width="19px" height="11px"></a>
           <img src="../assets/huajiefangshi@2x.png" alt="化解方式" class="huajie">
           <h2 v-for="item in advices">{{item.content}}</h2>
+          <h2>次卧挨电梯 ，黄色水晶球可化解</h2>
+          <h2>次卧挨电梯 ，黄色水晶球可化解</h2>
+          <h2>次卧挨电梯 ，黄色水晶球可化解</h2>
 
-          <img src="../assets/logo2@2x.png" alt="In家生活" class="logo">
-        </v-touch>
+          <img src="../assets/logo2x@2x.png" alt="In家生活" class="logo">
+        </div>
+        <div class="defuse-footer">
+          <a class="brown-btn" @click="order">预约看房</a>
+          <h2>如有兴趣，点击预约看房，就能申请实地看风水</h2>
+        </div>
       </div>
-      <div class="defuse-footer">
-        <a class="brown-btn" @click="order">预约看房</a>
-        <h2>如有兴趣，点击预约看房，就能申请实地看风水</h2>
-      </div>
-    </div>
+    </v-touch>
     <popup :show="isOrder">
       <div slot="popup-main">
         <h1>预约看房</h1>
@@ -138,6 +141,9 @@
   .defuse-main {
     width: 100vw;
     height: 100vh;
+    >div {
+      height: 100%;
+    }
     .defuse-z {
       opacity: 0;
       transform: translate(0, -20px);
@@ -175,17 +181,25 @@
           left: 44%; //一行9%
           top: 20%;
         }
-        &:last-of-type {
+        &:nth-of-type(2) {
           left: 53%;
+          top: 20%;
+        }
+        &:nth-of-type(3) {
+          left: 35%;
+          top: 20%;
+        }
+        &:nth-of-type(4) {
+          left: 62%;
           top: 20%;
         }
       }
       .logo {
         position: absolute;
-        height: 6%;
+        height: 3%;
         width: 8%;
         right: 12%;
-        top: 72%;
+        top: 75%;
       }
     }
     .open-z {

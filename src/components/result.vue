@@ -1,21 +1,21 @@
 <template>
   <div class="result-main">
-    <h1>融创河滨之城-195A户型</h1>
+    <h1>{{buildName}}-{{typeName}}</h1>
     <div class="dingwei">
-      <img src="../assets/result@1x.png" alt="结果图" class="img-result">
-      <tab v-for="pointer in pointers" :value="pointer.content" :top="(pointer.y)/500*250" :left="(pointer.x)/500*300" :key="pointer.id"></tab>
+      <img :src="imgSrc||'/static/img/result@1x.png'" alt="结果图" :class="['img-result',{'afternoon':isOpen}]">
+      <tab v-for="pointer in pointers" :value="pointer.content" :top="(pointer.y)/500*250-33" :left="(pointer.x)/500*250" :key="pointer.id"></tab>
     </div>
-    <div :class="[{'tab-none':isDefuse},'tab']">
-      <img src="../assets/xin4@2x.png" alt="" :class="['xinBottom',{afterChange1:isOpen}]">
+    <div :class="[{'tab-none':isDefuse},'tab',{'tab-afternoon':isOpen}]">
+      <img src="../assets/xin4@2x.png" alt="" class="xinBottom">
       <div class="z">
         <div class="grad-res"></div>
         <resultMessage title="good" :arr="goods"></resultMessage>
         <resultMessage title="bad" :arr="bads"></resultMessage>
         <div class="grad-res"></div>
       </div>
-      <img src="../assets/xin3@2x.png" alt="" :class="['xinTop',{afterChange2:isOpen}]">
+      <img src="../assets/xin3@2x.png" alt="" class="xinTop">
+      <a class="btn result-btn" @click="defuse">获取化解方法</a>
     </div>
-    <a class="btn result-btn" @click="defuse">获取化解方法</a>
     <popup :popStyle="resStyle" :show="isDefuse">
       <div slot="popup-main">
         <div class="popup-res">
@@ -27,7 +27,7 @@
             <span v-if="!isClick">获取验证码</span>
             <span v-if="isClick">{{number}}s后重试</span>
           </a>
-          <img src="../assets/logo2@2x.png" alt="In家生活" width="50px" height="50px" class="logo">
+          <img src="../assets/logo2x@2x.png" alt="In家生活" width="100px" height="50px" class="logo">
         </div>
         <a class="btn" @click="lookUp">查看</a>
       </div>
@@ -70,6 +70,10 @@
         bads: [],
         pointers: [],
 
+        imgSrc: "",
+        buildName: "",
+        typeName: "",
+
         phone: "",
         verify: ""
       }
@@ -100,6 +104,18 @@
 
       },
       lookUp() {
+        if (window.isFirst) {
+          if (!this.phone && this.verify) {
+            alert("请输入手机号");
+            return "";
+          } else if (this.phone && !this.verify) {
+            alert("请输入验证码");
+            return "";
+          } else if (!this.phone && !this.verify) {
+            alert("请输入手机号和验证码");
+            return "";
+          }
+        }
         if (window.isFirst) {
           let params = {
             scode: this.verify,
@@ -150,6 +166,9 @@
       sendMessage(window.location.href);
     },
     mounted() {
+      this.imgSrc = window.src;
+      this.buildName = window.buildingName;
+      this.typeName = window.typeName;
       setTimeout(() => {
         this.isOpen = true;
       }, 1000);
@@ -189,8 +208,13 @@
     text-align: center;
     position: relative;
     .img-result {
-      width: 300px;
+      width: 250px;
       height: 250px;
+      transform: scale(1.5, 1.5);
+      transition: all 2s;
+    }
+    .afternoon {
+      transform: scale(1, 1);
     }
     h1 {
       font-size: 18px;
@@ -209,7 +233,9 @@
     height: 180px;
     margin-top: 20px;
     position: relative;
-    transition: all 1s;
+    top: 300px;
+ 
+    transition: all 2s;
     .xinBottom {
       position: absolute;
       left: 0;
@@ -217,7 +243,7 @@
       z-index: 1;
       width: 100%;
       height: 200px;
-      transition: all 3s;
+      transform: translateX(-85%);
     }
     .z {
       width: 96%;
@@ -235,14 +261,12 @@
       z-index: 3;
       width: 94%;
       height: 200px;
-      transition: all 3s;
-    }
-    .afterChange1 {
-      transform: translateX(-85%);
-    }
-    .afterChange2 {
       transform: translateX(-90%);
     }
+  }
+
+  .tab-afternoon {
+    top:0;
   }
   
   .tab-none {

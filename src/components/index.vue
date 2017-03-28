@@ -3,15 +3,15 @@
     <popup :show="isShow">
       <div slot="popup-main">
         <h1>{{heading}}</h1>
-        <a class="return" v-if="isHouse" @click="reBuild"><img src="../assets/zuo@2x.png" alt="返回上一层" width="11px" height="18px"></a>
+        <a class="return" v-if="isReturn" @click="reBuild"><img src="../assets/zuo@2x.png" alt="返回上一层" width="11px" height="18px"></a>
         <div class="popup-main">
           <div class="gradient"></div>
           <div class="popup-message" @scroll="move">
             <transition name="fade" mode="out-in">
               <template v-if="!isHouse">
-                <building v-model="buildInfo" v-if="!isAdd">
+                <building v-model="buildInfo" v-if="!isAdd" :haveWord="youWord">
                   <div class="add-building" slot="add-building">
-                    <input type="text" placeholder="没找到？请输入您的楼盘" class="information" v-model="buildMess">
+                    <input type="text" placeholder="没找到？请输入您的楼盘" class="information" v-model="buildMess" :disabled="isCheck">
                     <a class="brown-btn add-btn" @click="add" :style="addBg">添加</a>
                   </div>
                 </building>
@@ -56,8 +56,9 @@
         buildMess: "",
         isAdd: false,
         isHouse: false,
+        isReturn: false,
         isShow: true,
-        isBottom: false
+        isBottom: false,
       }
     },
     components: {
@@ -75,13 +76,28 @@
         }
       },
       changeBg() {
-        if ((this.buildInfo && this.title == "building") || this.houseInfo) {
+        if ((this.buildInfo && this.title == "building") || this.houseInfo && this.title == "house") {
           return {
             background: "#000"
           }
         }
+      },
+      isCheck() {
+        if (this.buildInfo) {
+          return true;
+        } else {
+          return false;
+        }
+      },
+      youWord() {
+        if (this.buildMess) {
+          return true;
+        } else {
+          return false;
+        }
       }
     },
+
     methods: {
       change() {
         if (this.title == "building" && this.buildInfo) {
@@ -89,11 +105,12 @@
           this.btn = "查看结果";
           this.title = "house";
           this.isHouse = true;
+          this.isReturn = true;
         } else if (this.title == "house" && this.houseInfo) {
           router.push({
             name: 'result',
             params: {
-              house: this.houseInfo,
+              house: this.houseInfo
             }
           });
         } else if (this.title == "ok") {
@@ -101,24 +118,37 @@
         }
       },
       reBuild() {
-        this.isHouse = false;
-        this.heading = "楼  盘";
+        if (this.title == "house") {
+          this.isHouse = false;
+          this.heading = "楼  盘";
+          this.buildInfo = "";
+        } else if (this.title = "ok") {
+          this.isAdd = false;
+          this.buildMess = "";
+        }
         this.btn = "下一步";
         this.title = "building";
+        this.isReturn = false;
       },
       add() {
-        if (this.buildMess) {
-          let params = {
-            name: this.buildMess
-          };
-          dumbWrapper({
-            promise: newEstate(params),
-            successCB: () => {
-              this.isAdd = true;
-            }
-          })
-          this.btn = "OK";
-          this.title = "ok";
+        if (!this.buildInfo) {
+          if (this.buildMess) {
+            let params = {
+              name: this.buildMess
+            };
+            dumbWrapper({
+              promise: newEstate(params),
+              successCB: () => {
+                this.isAdd = true;
+                this.isReturn = true;
+              }
+            })
+            this.btn = "OK";
+            this.title = "ok";
+            this.isBottom = true;
+          } else {
+            alert("请输入正确的楼盘");
+          }
         }
       },
 
@@ -144,25 +174,25 @@
   .fade-leave-active {
     transition: all .5s;
   }
-
+  
   .fade-enter,
   .fade-leave-to {
     opacity: 0;
     transform: translateY(10vh);
   }
-
+  
   .bottom-enter-active,
   .bottom-leave-active {
     transition: all .3s;
     visibility: visible;
   }
-
+  
   .bottom-enter,
   .bottom-leave-to {
     opacity: 0;
     visibility: hidden;
   }
-
+  
   .main {
     background: url("../assets/shouye@2x.jpg");
     background-size: 100% 100%;
@@ -172,14 +202,14 @@
       background: #aaa;
     }
   }
-
+  
   .popup-main {
     position: relative;
     width: 285px;
     height: 350px;
     margin: 0 auto;
   }
-
+  
   .popup {
     h1 {
       position: absolute;
@@ -196,7 +226,7 @@
       left: 16px;
     }
   }
-
+  
   .gradient {
     background-image: linear-gradient(to bottom, #ffffff 24%, rgba(255, 255, 255, 0.00) 98%);
     z-index: 10;
@@ -209,7 +239,7 @@
       bottom: 0;
     }
   }
-
+  
   .popup-message {
     width: 100%;
     height: 100%;

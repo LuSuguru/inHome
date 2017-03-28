@@ -79,10 +79,6 @@ export const fenxiang = ({
     link,
     imgUrl,
 }) => {
-    console.log(title, desc, link, imgUrl);
-    console.log(title);
-    console.log(link);
-    console.log(imgUrl);
     wx.onMenuShareTimeline({
         title: title, // 分享标题
         link: link, // 分享链接

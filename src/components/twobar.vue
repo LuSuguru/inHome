@@ -48,7 +48,7 @@
     position: relative;
     z-index: 20;
     img {
-      margin: 20px 0 25px;
+      margin: 15px 0 10px;
     }
     h2 {
       font-size: 18px;
@@ -61,6 +61,7 @@
     h3 {
       letter-spacing: 2px;
       line-height: 20px;
+      font-size: 14px;
     }
   }
 

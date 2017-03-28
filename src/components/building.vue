@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="item" v-for="building in buildings" :key="building.loupanId">
-      <input type="radio" :id="building.loupanId" :value="building.huxings" v-model="build">
+      <input type="radio" :id="building.loupanId" :disabled ="haveChecked" :value="building" v-model="build" @click="isCheck(building)">
       <label :for="building.loupanId">{{building.name}}</label>
     </div>
     <slot name="add-building"></slot>
@@ -19,13 +19,29 @@
     data() {
       return {
         buildings: [],
-        build: ""
+        build: "",
+        buildName: ""
       }
     },
-    props: ["value"],
+    props: ["value","haveWord"],
+    computed:{
+        haveChecked() {
+          return this.haveWord;
+        }
+    },
     watch: {
       build(val) {
-        this.$emit("input", val);
+        this.$emit("input", val.huxings);
+        window.buildingName = val.name;
+      }
+    },
+    methods: {
+      isCheck(build) {
+        if (build.name == this.buildName) {
+          this.build = "";
+        } else {
+          this.buildName = build.name;
+        }
       }
     },
     mounted() {
@@ -55,7 +71,7 @@
       letter-spacing: 2px;
       position: relative;
       left: 20px;
-      width: 100px;
+      width: 130px;
       line-height: 47px;
       height: 47px;
       text-align: left;

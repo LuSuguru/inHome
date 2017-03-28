@@ -14,7 +14,7 @@
     mounted() {
       setTimeout(() => {
         this.isOpen = true;
-      }, 1000);
+      }, 2500);
     }
   }
 
