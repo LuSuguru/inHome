@@ -6,10 +6,6 @@
           <a class="re-btn" @click="reResult"><img src="../assets/xia@2x.png" alt="返回结果" width="19px" height="11px"></a>
           <img src="../assets/huajiefangshi@2x.png" alt="化解方式" class="huajie">
           <h2 v-for="item in advices">{{item.content}}</h2>
-          <h2>次卧挨电梯 ，黄色水晶球可化解</h2>
-          <h2>次卧挨电梯 ，黄色水晶球可化解</h2>
-          <h2>次卧挨电梯 ，黄色水晶球可化解</h2>
-
           <img src="../assets/logo2x@2x.png" alt="In家生活" class="logo">
         </div>
         <div class="defuse-footer">

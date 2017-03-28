@@ -50,15 +50,15 @@
       return {
         heading: "楼  盘",
         btn: "下一步",
-        title: "building",
+        title: "building",  //当前页面的flag
         buildInfo: "", //子组件回调的楼市信息
         houseInfo: "", //子组件回调的户型信息
-        buildMess: "",
-        isAdd: false,
-        isHouse: false,
-        isReturn: false,
-        isShow: true,
-        isBottom: false,
+        buildMess: "", //手动输入的户型信息
+        isAdd: false, //判断二维码页面是否出现
+        isHouse: false, //判断户型页面是否出现楼盘页面首先消失
+        isReturn: false,//判断是否返回
+        isShow: true, //窗口是否弹出
+        isBottom: false,  //渐变层是否出现
       }
     },
     components: {
