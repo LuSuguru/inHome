@@ -222,7 +222,7 @@
       margin-bottom: 2vh;
     }
     .result-btn {
-      margin-top: 3vw;
+      margin-top: 5vw;
       width: 38vw;
       height: 7vh;
     }
@@ -308,6 +308,7 @@
     input {
       width: 243px;
       height: 34px;
+      font-size: 14px;
     }
     .phone {
       margin: 50px 0 20px;

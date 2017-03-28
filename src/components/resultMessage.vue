@@ -49,7 +49,7 @@
       -webkit-overflow-scrolling: touch;
     }
     p {
-      font-size: 12px;
+      font-size: 13px;
       color: #666666;
       line-height: 18px;
       text-align: center;

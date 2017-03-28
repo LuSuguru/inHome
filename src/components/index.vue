@@ -151,8 +151,7 @@
           }
         }
       },
-
-
+      
       move(event) {
         if (event.target.scrollTop > 148 && this.title == "building") {
           this.isBottom = true;
@@ -194,7 +193,7 @@
   }
   
   .main {
-    background: url("../assets/shouye@2x.jpg");
+    background: url("../assets/shouye.jpg");
     background-size: 100% 100%;
     width: 100vw;
     height: 100vh;
