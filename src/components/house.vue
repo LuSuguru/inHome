@@ -20,13 +20,12 @@
     props: ["value", "types"],
     watch: {
       house(val) {
-        this.$emit("input", val.id);
+        this.$emit("input", val);
         window.src = val.imgUrl;
         window.typeName = val.name;
       }
     },
     mounted() {
-
     }
   }
 
@@ -43,7 +42,6 @@
       &::before {
         left: 0px;
         top: 17px;
-
       }
     }
   }

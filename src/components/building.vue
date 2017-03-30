@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="item" v-for="building in buildings" :key="building.loupanId">
-      <input type="radio" :id="building.loupanId" :disabled="haveWord" :value="building" v-model="build" @click="isCheck(building)">
+      <input type="radio" :id="building.loupanId" :value="building" v-model="build">
       <label :for="building.loupanId">{{building.name}}</label>
     </div>
     <slot name="add-building"></slot>
@@ -20,23 +20,18 @@
       return {
         buildings: [],
         build: "",
-        buildName: ""
       }
     },
     props: ["value", "haveWord"],
     watch: {
-      build(val) {
-        this.$emit("input", val.huxings);
-        window.buildingName = val.name;
-      }
-    },
-    methods: {
-      isCheck(build) {
-        if (build.name == this.buildName) {
+      haveWord(val) {
+        if (val) {
           this.build = "";
-        } else {
-          this.buildName = build.name;
         }
+      },
+      build(val) {
+        this.$emit("input", val);
+        window.buildName = val.name;
       }
     },
     mounted() {

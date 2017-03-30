@@ -62,6 +62,7 @@
       letter-spacing: 2px;
       line-height: 20px;
       font-size: 14px;
+      padding:0 50px;
     }
   }
 

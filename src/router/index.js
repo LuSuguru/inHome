@@ -12,12 +12,12 @@ export default new Router({
         name: 'index',
         component: index
     }, {
-        path: '/result/:house',
+        path: '/result/:house/:buildName/:src/:typeName',
         name: 'result',
         component: result
-    },{
-        path:'/result/defuse/:house',
-        name:'defuse',
-        component:defuse
+    }, {
+        path: '/result/defuse/:house',
+        name: 'defuse',
+        component: defuse
     }]
 })

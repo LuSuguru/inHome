@@ -27,7 +27,7 @@
             <span v-if="!isClick">获取验证码</span>
             <span v-if="isClick">{{number}}s后重试</span>
           </a>
-          <img src="../assets/logo2x@2x.png" alt="In家生活" width="100px" height="50px" class="logo">
+          <img src="../assets/logo.png" alt="In家生活" width="75px" height="30px" class="logo">
         </div>
         <a class="btn" @click="lookUp">查看</a>
       </div>
@@ -166,9 +166,9 @@
       sendMessage(window.location.href);
     },
     mounted() {
-      this.imgSrc = window.src;
-      this.buildName = window.buildingName;
-      this.typeName = window.typeName;
+      this.imgSrc = this.$route.params.src;
+      this.buildName = this.$route.params.buildName;
+      this.typeName = this.$route.params.typeName;
       setTimeout(() => {
         this.isOpen = true;
       }, 1000);
@@ -234,7 +234,6 @@
     margin-top: 20px;
     position: relative;
     top: 300px;
- 
     transition: all 2s;
     .xinBottom {
       position: absolute;
@@ -264,9 +263,9 @@
       transform: translateX(-90%);
     }
   }
-
+  
   .tab-afternoon {
-    top:0;
+    top: 0;
   }
   
   .tab-none {

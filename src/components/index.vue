@@ -1,23 +1,23 @@
 <template>
-  <div class="main">
+  <div class="main" :style="wh">
     <popup :show="isShow">
       <div slot="popup-main">
         <h1>{{heading}}</h1>
         <a class="return" v-if="isReturn" @click="reBuild"><img src="../assets/zuo@2x.png" alt="返回上一层" width="11px" height="18px"></a>
         <div class="popup-main">
           <div class="gradient"></div>
-          <div class="popup-message" @scroll="move">
+          <div class="popup-message" @scroll="move" ref="scrollPop">
             <transition name="fade" mode="out-in">
               <template v-if="!isHouse">
                 <building v-model="buildInfo" v-if="!isAdd" :haveWord="youWord">
                   <div class="add-building" slot="add-building">
-                    <input type="text" placeholder="没找到？请输入您的楼盘" class="information" v-model="buildMess" :disabled="isCheck">
+                    <input type="text" placeholder="没找到？请输入您的楼盘" class="information" v-model="buildMess" @focus="onFocu" @blur="onBlur">
                     <a class="brown-btn add-btn" @click="add" :style="addBg">添加</a>
                   </div>
                 </building>
                 <twobar v-if="isAdd" :isDefuse="false"></twobar>
               </template>
-              <house v-model="houseInfo" v-if="isHouse" :types="buildInfo"></house>
+              <house v-model="houseInfo" v-if="isHouse" :types="buildInfo.huxings"></house>
             </transition>
           </div>
           <transition name="bottom">
@@ -50,15 +50,20 @@
       return {
         heading: "楼  盘",
         btn: "下一步",
-        title: "building",  //当前页面的flag
+        title: "building", //当前页面的flag
         buildInfo: "", //子组件回调的楼市信息
         houseInfo: "", //子组件回调的户型信息
         buildMess: "", //手动输入的户型信息
         isAdd: false, //判断二维码页面是否出现
         isHouse: false, //判断户型页面是否出现楼盘页面首先消失
-        isReturn: false,//判断是否返回
+        isReturn: false, //判断是否返回
         isShow: true, //窗口是否弹出
-        isBottom: false,  //渐变层是否出现
+        isBottom: false, //渐变层是否出现
+        flag: false, //判断输入框是否聚焦
+        wh: {
+          width: window.innerWidth + "px",
+          height: window.innerHeight + "px"
+        }
       }
     },
     components: {
@@ -69,9 +74,9 @@
     },
     computed: {
       addBg() {
-        if (!this.buildMess) {
+        if (!this.buildInfo && this.buildMess) {
           return {
-            background: "#aaa"
+            background: "#a59371"
           }
         }
       },
@@ -82,15 +87,8 @@
           }
         }
       },
-      isCheck() {
-        if (this.buildInfo) {
-          return true;
-        } else {
-          return false;
-        }
-      },
       youWord() {
-        if (this.buildMess) {
+        if (this.flag) {
           return true;
         } else {
           return false;
@@ -99,6 +97,13 @@
     },
 
     methods: {
+      //聚焦时的测试
+      onFocu() {
+        this.flag = true;
+      },
+      onBlur() {
+        this.flag = false;
+      },
       change() {
         if (this.title == "building" && this.buildInfo) {
           this.heading = "户 型";
@@ -106,11 +111,15 @@
           this.title = "house";
           this.isHouse = true;
           this.isReturn = true;
+          this.$refs.scrollPop.scrollTop = 0;
         } else if (this.title == "house" && this.houseInfo) {
           router.push({
             name: 'result',
             params: {
-              house: this.houseInfo
+              house: this.houseInfo.id,
+              buildName: this.buildInfo.name,
+              src: this.houseInfo.imgUrl,
+              typeName: this.houseInfo.name
             }
           });
         } else if (this.title == "ok") {
@@ -131,30 +140,29 @@
         this.isReturn = false;
       },
       add() {
-        if (!this.buildInfo) {
-          if (this.buildMess) {
-            let params = {
-              name: this.buildMess
-            };
-            dumbWrapper({
-              promise: newEstate(params),
-              successCB: () => {
-                this.isAdd = true;
-                this.isReturn = true;
-              }
-            })
-            this.btn = "OK";
-            this.title = "ok";
-            this.isBottom = true;
-          } else {
-            alert("请输入正确的楼盘");
-          }
+        if (this.buildMess) {
+          let params = {
+            name: this.buildMess
+          };
+          dumbWrapper({
+            promise: newEstate(params),
+            successCB: () => {
+              this.isAdd = true;
+              this.isReturn = true;
+            }
+          })
+          this.btn = "OK";
+          this.title = "ok";
+          this.isBottom = true;
+        } else {
+          alert("请输入正确的楼盘");
         }
       },
-      
+
       move(event) {
-        if (event.target.scrollTop > 148 && this.title == "building") {
+        if (event.target.scrollTop > 105 && this.title == "building") {
           this.isBottom = true;
+
         } else {
           this.isBottom = false;
         }
@@ -163,6 +171,9 @@
     created() {
       // sendMessage(window.location.href);
       sendMessage(window.location.href.split('#')[0])
+    },
+    mounted() {
+
     }
   }
 
@@ -266,6 +277,7 @@
         height: 30px;
         line-height: 30px;
         float: right;
+        background: #aaa;
       }
     }
   }

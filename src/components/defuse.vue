@@ -1,19 +1,17 @@
 <template>
   <div :class="['defuse',{open:isOpen}]">
-    <v-touch v-on:pandown="reResult">
-      <div class="defuse-main">
-        <div :class="['defuse-z',{'open-z':isOpen}]">
-          <a class="re-btn" @click="reResult"><img src="../assets/xia@2x.png" alt="返回结果" width="19px" height="11px"></a>
-          <img src="../assets/huajiefangshi@2x.png" alt="化解方式" class="huajie">
-          <h2 v-for="item in advices">{{item.content}}</h2>
-          <img src="../assets/logo2x@2x.png" alt="In家生活" class="logo">
-        </div>
-        <div class="defuse-footer">
-          <a class="brown-btn" @click="order">预约看房</a>
-          <h2>如有兴趣，点击预约看房，就能申请实地看风水</h2>
-        </div>
+    <div class="defuse-main">
+      <div :class="['defuse-z',{'open-z':isOpen}]">
+        <a class="re-btn" @click="reResult"><img src="../assets/xia@2x.png" alt="返回结果" width="19px" height="8px"></a>
+        <img src="../assets/huajiefangshi@2x.png" alt="化解方式" class="huajie">
+        <h2 v-for="item in advices">{{item.content}}</h2>
+        <img src="../assets/logo.png" alt="In家生活" class="logo">
       </div>
-    </v-touch>
+      <div class="defuse-footer">
+        <a class="brown-btn" @click="order">预约看房</a>
+        <h2>如有兴趣，点击预约看房，就能申请实地看风水</h2>
+      </div>
+    </div>
     <popup :show="isOrder">
       <div slot="popup-main">
         <h1>预约看房</h1>
@@ -63,17 +61,17 @@
         };
         dumbWrapper({
           promise: yuyue(params),
-          successCB: () => {
-            alert("预约成功");
-          }
+          successCB: () => {}
         })
       },
       reResult() {
         router.push({
           name: 'result',
           params: {
-            building: this.$route.params.building,
-            house: this.$route.params.house
+            house: this.$route.params.house,
+            buildName: window.buildName,
+            src: window.src,
+            typeName: window.typeName,
           }
         })
       },
@@ -137,9 +135,6 @@
   .defuse-main {
     width: 100vw;
     height: 100vh;
-    >div {
-      height: 100%;
-    }
     .defuse-z {
       opacity: 0;
       transform: translate(0, -20px);
@@ -166,23 +161,27 @@
       }
       h2 {
         position: absolute;
+        -webkit-writing-mode: vertical-rl;
+        writing-mode: tb-rl;
+        writing-mode: vertical-rl;
         width: 25px;
         height: 65%;
         overflow: auto;
         -webkit-overflow-scrolling: touch;
         font-size: 16px;
         color: #444444;
-        line-height: 22px;
+        letter-spacing: 5px;
+        line-height: 20px;
         &:first-of-type {
-          left: 44%; //一行9%
+          left: 42%; //一行9%
           top: 20%;
         }
         &:nth-of-type(2) {
-          left: 53%;
+          left: 51%;
           top: 20%;
         }
         &:nth-of-type(3) {
-          left: 35%;
+          left: 33%;
           top: 20%;
         }
         &:nth-of-type(4) {
@@ -192,7 +191,7 @@
       }
       .logo {
         position: absolute;
-        height: 3%;
+        height: 2.5%;
         width: 8%;
         right: 12%;
         top: 75%;

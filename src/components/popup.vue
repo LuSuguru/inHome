@@ -3,7 +3,7 @@
     <div :class="[{'popup-show':isShow},'popup']" :style="popStyle">
       <slot name="popup-main"></slot>
     </div>
-    <div :class="[{'popupBg-show':isBg},'popupBg']"></div>
+    <div :class="[{'popupBg-show':isBg},'popupBg']" :style="wh"></div>
   </div>
 </template>
 <script>
@@ -11,7 +11,11 @@
     data() {
       return {
         isShow: false,
-        isBg: false
+        isBg: false,
+        wh: {
+          width: window.innerWidth + "px",
+          height: window.innerHeight + "px"
+        }
       }
     },
     props: ["show", "popStyle"],
