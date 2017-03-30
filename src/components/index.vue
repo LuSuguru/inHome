@@ -188,7 +188,7 @@
   .fade-enter,
   .fade-leave-to {
     opacity: 0;
-    transform: translateY(10vh);
+    transform: translateZ(0) translateY(10vh);
   }
   
   .bottom-enter-active,

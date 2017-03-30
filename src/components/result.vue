@@ -210,7 +210,7 @@
     .img-result {
       width: 250px;
       height: 250px;
-      transform: scale(1.5, 1.5);
+      transform: translateZ(0) scale(1.5, 1.5);
       transition: all 2s;
     }
     .afternoon {
@@ -242,7 +242,7 @@
       z-index: 1;
       width: 100%;
       height: 200px;
-      transform: translateX(-85%);
+      transform: translateZ(0) translateX(-85%);
     }
     .z {
       width: 96%;
@@ -260,7 +260,7 @@
       z-index: 3;
       width: 94%;
       height: 200px;
-      transform: translateX(-90%);
+      transform: translateZ(0) translateX(-90%);
     }
   }
   
