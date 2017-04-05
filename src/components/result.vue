@@ -210,8 +210,9 @@
     .img-result {
       width: 250px;
       height: 250px;
+      -webkit-backface-visibility: hidden;
       transform: translateZ(0) scale(1.5, 1.5);
-      transition: all 2s;
+      transition: transform 2s;
     }
     .afternoon {
       transform: scale(1, 1);
@@ -222,7 +223,10 @@
       margin-bottom: 2vh;
     }
     .result-btn {
-      margin-top: 5vw;
+      display: block;
+      position: relative;
+      left: 2vw;
+      margin: 5vw auto;
       width: 38vw;
       height: 7vh;
     }
@@ -234,7 +238,8 @@
     margin-top: 20px;
     position: relative;
     top: 300px;
-    transition: all 2s;
+    transform: translateZ(0);
+    transition: top 2s;
     .xinBottom {
       position: absolute;
       left: 0;
@@ -242,7 +247,8 @@
       z-index: 1;
       width: 100%;
       height: 200px;
-      transform: translateZ(0) translateX(-85%);
+      -webkit-backface-visibility: hidden;
+      transform: translateX(-85%);
     }
     .z {
       width: 96%;
@@ -260,7 +266,8 @@
       z-index: 3;
       width: 94%;
       height: 200px;
-      transform: translateZ(0) translateX(-90%);
+      -webkit-backface-visibility: hidden;
+      transform: translateX(-90%);
     }
   }
   

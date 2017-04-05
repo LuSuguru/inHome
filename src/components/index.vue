@@ -1,5 +1,5 @@
 <template>
-  <div class="main" :style="wh">
+  <div class="main" :style="wh" @click="show">
     <popup :show="isShow">
       <div slot="popup-main">
         <h1>{{heading}}</h1>
@@ -57,7 +57,7 @@
         isAdd: false, //判断二维码页面是否出现
         isHouse: false, //判断户型页面是否出现楼盘页面首先消失
         isReturn: false, //判断是否返回
-        isShow: true, //窗口是否弹出
+        isShow: false, //窗口是否弹出
         isBottom: false, //渐变层是否出现
         flag: false, //判断输入框是否聚焦
         wh: {
@@ -166,15 +166,15 @@
         } else {
           this.isBottom = false;
         }
+      },
+      show() {
+        this.isShow = !this.isShow;
       }
     },
     created() {
       // sendMessage(window.location.href);
       sendMessage(window.location.href.split('#')[0])
     },
-    mounted() {
-
-    }
   }
 
 </script>
@@ -182,7 +182,7 @@
 <style lang="less">
   .fade-enter-active,
   .fade-leave-active {
-    transition: all .5s;
+    transition: visibility .5s, transform .5s, opacity .5s;
   }
   
   .fade-enter,
@@ -193,7 +193,7 @@
   
   .bottom-enter-active,
   .bottom-leave-active {
-    transition: all .3s;
+    transition: visibility .5s, transform .5s, opacity .5s;
     visibility: visible;
   }
   

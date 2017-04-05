@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div :class="[{'popup-show':isShow},'popup']" :style="popStyle">
+    <div :class="[{'popup-show':isShow},'popup']" :style="popStyle" @click.stop>
       <slot name="popup-main"></slot>
     </div>
     <div :class="[{'popupBg-show':isBg},'popupBg']" :style="wh"></div>
@@ -31,11 +31,10 @@
       }
     },
     mounted() {
-      if (this.show)
-        setTimeout(() => {
-          this.isShow = true;
-          this.isBg = true;
-        }, 2000);
+      if (this.show) {
+        this.isShow = true;
+        this.isBg = true;
+      }
     }
   }
 
