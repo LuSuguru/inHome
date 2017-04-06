@@ -124,6 +124,11 @@
           });
         } else if (this.title == "ok") {
           this.isShow = false;
+          this.isAdd = false;
+          this.btn = "下一步";
+          this.title = "building";
+          this.buildInfo = "";
+          this.buildMess = "";
         }
       },
       reBuild() {
@@ -184,25 +189,25 @@
   .fade-leave-active {
     transition: visibility .5s, transform .5s, opacity .5s;
   }
-  
+
   .fade-enter,
   .fade-leave-to {
     opacity: 0;
     transform: translateZ(0) translateY(10vh);
   }
-  
+
   .bottom-enter-active,
   .bottom-leave-active {
     transition: visibility .5s, transform .5s, opacity .5s;
     visibility: visible;
   }
-  
+
   .bottom-enter,
   .bottom-leave-to {
     opacity: 0;
     visibility: hidden;
   }
-  
+
   .main {
     background: url("../assets/shouye.jpg");
     background-size: 100% 100%;
@@ -212,14 +217,14 @@
       background: #aaa;
     }
   }
-  
+
   .popup-main {
     position: relative;
     width: 285px;
     height: 350px;
     margin: 0 auto;
   }
-  
+
   .popup {
     h1 {
       position: absolute;
@@ -236,7 +241,7 @@
       left: 16px;
     }
   }
-  
+
   .gradient {
     background-image: linear-gradient(to bottom, #ffffff 24%, rgba(255, 255, 255, 0.00) 98%);
     z-index: 10;
@@ -249,7 +254,7 @@
       bottom: 0;
     }
   }
-  
+
   .popup-message {
     width: 100%;
     height: 100%;
