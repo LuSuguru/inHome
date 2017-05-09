@@ -56,7 +56,8 @@ const ifSuccess = () => {
         }
     })
 }
-
+let appId = "wxd83f1f75c115031c";
+appId = "wx3093c760212d6ca2"; // innnhome的appid
 export const wxConfig = ({
     timestamp,
     nonceStr,
@@ -64,7 +65,7 @@ export const wxConfig = ({
 }) => {
     wx.config({
         debug: false,
-        appId: "wxd83f1f75c115031c",
+        appId,
         timestamp: timestamp,
         nonceStr: nonceStr,
         signature: signature,
