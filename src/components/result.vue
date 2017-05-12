@@ -27,7 +27,7 @@
             <span v-if="!isClick">获取验证码</span>
             <span v-if="isClick">{{number}}s后重试</span>
           </a>
-          <img src="../assets/logo.png" alt="In家生活" width="75px" height="30px" class="logo">
+          <img src="../assets/lOGO@2x.png" alt="In家生活" width="31px" height="40px" class="logo">
         </div>
         <a class="btn" @click="lookUp">查看</a>
       </div>
@@ -65,7 +65,6 @@
           "margin-top": "-205px",
           "padding-top": "60px"
         },
-
         goods: [],
         bads: [],
         pointers: [],
@@ -231,7 +230,7 @@
       height: 7vh;
     }
   }
-  
+
   .tab {
     width: 95vw;
     height: 180px;
@@ -270,16 +269,16 @@
       transform: translateX(-90%);
     }
   }
-  
+
   .tab-afternoon {
     top: 0;
   }
-  
+
   .tab-none {
     visibility: hidden;
     opacity: 0;
   }
-  
+
   .grad-res {
     width: 100%;
     height: 20px;
@@ -294,7 +293,7 @@
       background-image: linear-gradient(to top, #ffffff 24%, rgba(255, 255, 255, 0.00) 98%);
     }
   }
-  
+
   .popup-res {
     width: 285px;
     height: 280px;
@@ -330,7 +329,7 @@
       margin-top: 70px;
     }
   }
-  
+
   .dingwei {
     position: relative;
     display: inline-block;

@@ -1,5 +1,5 @@
 <template>
-  <div class="main" :style="wh" @click="show">
+  <div class="main" :style="wh">
     <popup :show="isShow">
       <div slot="popup-main">
         <h1>{{heading}}</h1>
@@ -27,7 +27,7 @@
         <a @click="change" class="btn change-btn" :style="changeBg">{{btn}}</a>
       </div>
     </popup>
-
+    <div class="begin-button" @click="show">开始测试</div>
   </div>
 </template>
 
@@ -185,6 +185,18 @@
 </script>
 
 <style lang="less">
+  .begin-button{
+    position: absolute;
+    bottom: 80px;
+    left: 50%;
+    transform: translate(-50%, 0);
+    border: 1px solid #c61f27;
+    padding: 8px 35px;
+    font-size: 14px;
+    color: #c61f27;
+    background-color: #fff;
+    font-weight: bold;
+  }
   .fade-enter-active,
   .fade-leave-active {
     transition: visibility .5s, transform .5s, opacity .5s;
@@ -209,7 +221,7 @@
   }
 
   .main {
-    background: url("../assets/shouye.jpg");
+    background: url("../assets/shouye@2x.png");
     background-size: 100% 100%;
     width: 100vw;
     height: 100vh;

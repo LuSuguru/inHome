@@ -5,7 +5,7 @@
         <a class="re-btn" @click="reResult"><img src="../assets/xia@2x.png" alt="返回结果" width="19px" height="8px"></a>
         <img src="../assets/huajiefangshi@2x.png" alt="化解方式" class="huajie">
         <h2 v-for="item in advices">{{item.content}}</h2>
-        <img src="../assets/logo.png" alt="In家生活" class="logo">
+        <img src="../assets/LOGO@2x.png" alt="In家生活" class="logo">
       </div>
       <div class="defuse-footer">
         <a class="brown-btn" @click="order">预约看房</a>
@@ -123,7 +123,7 @@
       z-index: 3;
     }
   }
-  
+
   .open {
     &::before,
     &::after {
@@ -131,7 +131,7 @@
       transform: translate(0, 0);
     }
   }
-  
+
   .defuse-main {
     width: 100vw;
     height: 100vh;
@@ -191,10 +191,10 @@
       }
       .logo {
         position: absolute;
-        height: 2.5%;
+        // height: 2.5%;
         width: 8%;
         right: 12%;
-        top: 75%;
+        top: 74%;
       }
     }
     .open-z {
@@ -202,7 +202,7 @@
       opacity: 1;
     }
   }
-  
+
   .defuse-footer {
     display: block;
     position: relative;
